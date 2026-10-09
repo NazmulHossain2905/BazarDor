@@ -1,0 +1,35 @@
+export const getUnitInBangla = (unit: string): string => {
+  const bnUnits: Record<string, string> = {
+    kg: "কেজি",
+    gram: "গ্রাম",
+    litre: "লিটার",
+    ml: "মিলিলিটার",
+    dozen: "ডজন",
+    piece: "টি",
+    pcs: "টি",
+    packet: "প্যাকেট",
+    box: "বক্স",
+    bottle: "বোতল",
+    bag: "ব্যাগ",
+    pound: "পাউন্ড",
+    ton: "টন",
+    meter: "মিটার",
+    cm: "সেন্টিমিটার",
+    pair: "জোড়া",
+    set: "সেট",
+    roll: "রোল",
+    slice: "স্লাইস",
+    bundle: "আঁটি",
+    cup: "কাপ",
+    tbsp: "টেবিল চামচ",
+    tsp: "চা চামচ",
+    serving: "পরিবেশন",
+    plate: "প্লেট",
+    can: "ক্যান",
+    jar: "জার",
+    tray: "ট্রে",
+    carton: "কার্টন",
+  };
+
+  return bnUnits[unit.toLowerCase()] ?? unit;
+};

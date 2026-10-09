@@ -1,13 +1,16 @@
 import Header from "@/components/header";
-import Marquee from "@/components/Marquee";
+import PriceTickerMarquee from "@/components/price-ticker-marquee";
+import PriceTickerSkeleton from "@/components/price-ticker-marquee/PriceTickerSkeleton";
 import type { Metadata } from "next";
 import { Hind_Siliguri } from "next/font/google";
+import { Suspense } from "react";
 import "./globals.css";
 
-const hindSiliguriSans = Hind_Siliguri({
-  variable: "--font-hind-siliguri-sans",
+const hindSiliguri = Hind_Siliguri({
   subsets: ["bengali", "latin"],
-  weight: "400",
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-hind-siliguri-sans",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -18,13 +21,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en"
-      className={`${hindSiliguriSans.variable} h-full antialiased`}
-    >
+    <html lang="en" className={`${hindSiliguri.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         <Header />
-        <Marquee />
+
+        <Suspense fallback={<PriceTickerSkeleton />}>
+          <PriceTickerMarquee />
+        </Suspense>
 
         <main className="flex-1">{children}</main>
       </body>

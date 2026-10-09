@@ -30,7 +30,10 @@ export default function User() {
       </button>
 
       {openMenu && (
-        <div onClick={() => setOpenMenu(false)} className="fixed inset-0" />
+        <div
+          onClick={() => setOpenMenu(false)}
+          className="fixed inset-0 z-10"
+        />
       )}
       {openMenu && <UserMenu />}
     </div>
