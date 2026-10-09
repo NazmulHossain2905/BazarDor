@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer";
 import Header from "@/components/header";
 import PriceTickerMarquee from "@/components/price-ticker-marquee";
 import PriceTickerSkeleton from "@/components/price-ticker-marquee/PriceTickerSkeleton";
@@ -30,6 +31,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </Suspense>
 
         <main className="flex-1">{children}</main>
+
+        <Footer />
       </body>
     </html>
   );

@@ -18,7 +18,7 @@ export default async function HomePage() {
     .slice(0, 6);
 
   return (
-    <section className="max-w-7xl px-4 py-6 mx-auto flex flex-col gap-10">
+    <section className="max-w-7xl px-4 py-6 mx-auto flex flex-col gap-10 mb-12">
       <Hero />
       <PriceIncreased products={increasedProducts} />
       <PriceDecreased products={decreasedProducts} />
