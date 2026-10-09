@@ -3,7 +3,6 @@ import Link from "next/link";
 
 export default async function NavCategory() {
   const categories = await getCategories();
-  console.log(categories);
 
   return (
     <nav className="bg-base-100 border-t border-t-base-200">

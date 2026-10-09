@@ -1,4 +1,5 @@
 import Header from "@/components/header";
+import Marquee from "@/components/Marquee";
 import type { Metadata } from "next";
 import { Hind_Siliguri } from "next/font/google";
 import "./globals.css";
@@ -23,6 +24,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         <Header />
+        <Marquee />
 
         <main className="flex-1">{children}</main>
       </body>
