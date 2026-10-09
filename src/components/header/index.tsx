@@ -14,6 +14,7 @@ export default function Header() {
         <Logo />
         {user ? <User /> : <Authentication />}
       </div>
+
       <Suspense fallback={<CategoryNavSkeleton />}>
         <NavCategory />
       </Suspense>
