@@ -1,7 +1,7 @@
 import LogoIcon from "@/assets/images/logo-icon.png";
 import Image from "next/image";
 import Link from "next/link";
-import CurrentBanglaDate from "./CurrentBanglaDate";
+import CurrentBanglaDate from "../common/CurrentBanglaDate";
 
 export default function Logo() {
   return (

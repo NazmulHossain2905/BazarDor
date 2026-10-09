@@ -7,6 +7,8 @@ interface PriceTickerItemProps {
 }
 
 export default function PriceTickerItem({ product }: PriceTickerItemProps) {
+  const isUp = product.change.dir === "up";
+
   return (
     <Link
       href={`product/${product.slug}`}
@@ -19,15 +21,14 @@ export default function PriceTickerItem({ product }: PriceTickerItemProps) {
         {getUnitInBangla(product.unit)}
       </span>
 
-      {product.change.dir === "up" ? (
-        <span className="text-error font-semibold">
-          ▲ {product.change.pct.toLocaleString("bn-Bd")}%
-        </span>
-      ) : (
-        <span className="text-success font-semibold">
-          ▼ {Math.abs(product.change.pct).toLocaleString("bn-Bd")}%
-        </span>
-      )}
+      <span
+        className={
+          isUp ? "font-semibold text-error" : "font-semibold text-success"
+        }
+      >
+        {isUp ? "▲" : "▼"}{" "}
+        {Math.abs(product.change.pct).toLocaleString("bn-BD")}%
+      </span>
     </Link>
   );
 }

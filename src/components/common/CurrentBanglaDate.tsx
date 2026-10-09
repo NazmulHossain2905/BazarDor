@@ -2,7 +2,11 @@
 
 import { useEffect, useState } from "react";
 
-export default function CurrentBanglaDate() {
+export default function CurrentBanglaDate({
+  className = "",
+}: {
+  className?: string;
+}) {
   const [date, setDate] = useState("");
 
   useEffect(() => {
@@ -13,5 +17,5 @@ export default function CurrentBanglaDate() {
     );
   }, []);
 
-  return <p className="text-xs">{date || "\u00A0"}</p>;
+  return <p className={`text-xs ${className}`}>{date || "\u00A0"}</p>;
 }
