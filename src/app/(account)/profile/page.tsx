@@ -45,7 +45,7 @@ export default function ProfilePage() {
           <p className="text-base-content/70">rezwanahmed@gmail.com</p>
         </div>
 
-        <button className="h-10 px-4 py-1.5 rounded-[8px] border border-error text-sm font-semibold cursor-pointer text-error flex items-center gap-2 hover:bg-error/10 transition-colors">
+        <button className="h-10 px-4 py-1.5 rounded-lg border border-error text-sm font-semibold cursor-pointer text-error flex items-center gap-2 hover:bg-error/10 transition-colors">
           <TbLogout2 className="size-4" /> <span>সাইন আউট</span>
         </button>
       </div>

@@ -67,7 +67,7 @@ function ProductSectionSkeleton({
   );
 }
 
-export function ProductCardSkeleton() {
+function ProductCardSkeleton() {
   return (
     <div className="rounded-2xl border border-base-300 bg-base-100 p-4">
       {/* Product image and name */}

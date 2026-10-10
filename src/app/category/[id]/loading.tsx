@@ -1,5 +1,3 @@
-import { ProductCardSkeleton } from "@/app/loading";
-
 export default function CategoryDetailsLoading() {
   return (
     <section className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-6">
@@ -35,7 +33,7 @@ function SortDropDownSkeleton() {
 
 function ProductHeaderSkeleton() {
   return (
-    <div className="flex animate-pulse items-center gap-3 rounded-[16px] border border-base-300 bg-base-100 p-5">
+    <div className="flex animate-pulse items-center gap-3 rounded-2xl border border-base-300 bg-base-100 p-5">
       {/* Emoji skeleton */}
       <div className="h-10 w-10 shrink-0 rounded-lg bg-base-300" />
 
@@ -45,6 +43,31 @@ function ProductHeaderSkeleton() {
 
         {/* Description skeleton */}
         <div className="h-4 w-64 max-w-full rounded-md bg-base-300" />
+      </div>
+    </div>
+  );
+}
+
+export function ProductCardSkeleton() {
+  return (
+    <div className="rounded-2xl border border-base-300 bg-base-100 p-4">
+      {/* Product image and name */}
+      <div className="flex items-center gap-3">
+        <div className="size-12 shrink-0 animate-pulse rounded-xl bg-base-300" />
+
+        <div className="flex-1 space-y-2">
+          <div className="h-4 w-24 max-w-full animate-pulse rounded bg-base-300" />
+          <div className="h-3 w-16 animate-pulse rounded bg-base-300" />
+        </div>
+      </div>
+
+      {/* Price label */}
+      <div className="mt-3 h-3 w-16 animate-pulse rounded bg-base-300" />
+
+      {/* Price and change percentage */}
+      <div className="mt-2 flex items-center justify-between gap-3">
+        <div className="h-6 w-24 max-w-[60%] animate-pulse rounded bg-base-300" />
+        <div className="h-7 w-16 shrink-0 animate-pulse rounded-xl bg-base-300" />
       </div>
     </div>
   );
