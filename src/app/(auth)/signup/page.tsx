@@ -3,24 +3,62 @@
 import MyButton from "@/components/common/Button";
 import Input from "@/components/common/Input";
 import SocialButtons from "@/components/common/SocialButtons";
-import { Form, Separator } from "@heroui/react";
+import { signUp } from "@/lib/auth-client";
+import { Form, Separator, toast } from "@heroui/react";
 import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { SyntheticEvent, useState } from "react";
 
 export default function SignUpPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const router = useRouter();
+
+  const handleFormSubmit = async (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
     const data: Record<string, string> = {};
-    // Convert FormData to plain object
+
     formData.forEach((value, key) => {
       data[key] = value.toString();
     });
-    alert(`Form submitted with: ${JSON.stringify(data, null, 2)}`);
+
+    try {
+      setIsSubmitting(true);
+
+      const { data: resData, error } = await signUp.email({
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        callbackURL: "/",
+      });
+
+      if (error) {
+        toast.danger(error.message);
+        return;
+      }
+
+      if (resData) {
+        toast.success("অ্যাকাউন্ট তৈরি হয়েছে! স্বাগতম।");
+
+        form.reset();
+        setPassword("");
+        setConfirmPassword("");
+
+        router.push("/");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.danger("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+  const isLoading = isSubmitting;
 
   return (
     <section className="max-w-md space-y-6 px-4 py-10 mx-auto">
@@ -33,13 +71,14 @@ export default function SignUpPage() {
 
       <Form
         className="rounded-2xl bg-base-100 border border-base-300 p-6 flex flex-col gap-4"
-        onSubmit={onSubmit}
+        onSubmit={handleFormSubmit}
       >
         <Input
           id="name"
           label="নাম"
           placeholder="যেমন: রহিম উদ্দিন"
           isRequired
+          isDisabled={isLoading}
           validate={(value) => {
             if (!value.trim()) {
               return "নাম দেওয়া আবশ্যক।";
@@ -56,6 +95,7 @@ export default function SignUpPage() {
           label="ইমেইল"
           placeholder="you@example.com"
           isRequired
+          isDisabled={isLoading}
           validate={(value) =>
             !value.trim()
               ? "ইমেইল আবশ্যক।"
@@ -73,6 +113,7 @@ export default function SignUpPage() {
           value={password}
           onChange={setPassword}
           isRequired
+          isDisabled={isLoading}
           validate={(value) => {
             if (value.length < 8) {
               return "পাসওয়ার্ড কমপক্ষে ৮ অক্ষরের হতে হবে।";
@@ -95,6 +136,7 @@ export default function SignUpPage() {
           value={confirmPassword}
           onChange={setConfirmPassword}
           isRequired
+          isDisabled={isLoading}
           validate={(value) => {
             if (!value) {
               return "পাসওয়ার্ড নিশ্চিত করা আবশ্যক।";
@@ -108,7 +150,9 @@ export default function SignUpPage() {
           }}
         />
 
-        <MyButton>অ্যাকাউন্ট তৈরি করুন</MyButton>
+        <MyButton isDisabled={isLoading}>
+          {isSubmitting ? "অ্যাকাউন্ট তৈরি হচ্ছে..." : "অ্যাকাউন্ট তৈরি করুন"}
+        </MyButton>
 
         <div className="flex gap-4 items-center">
           <Separator className="flex-1 h-0.5 bg-base-content/10" />

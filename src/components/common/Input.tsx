@@ -16,6 +16,7 @@ interface InputProps {
   onChange?: (value: string) => void;
   validate?: (value: string) => string | undefined;
   isRequired?: boolean;
+  isDisabled?: boolean;
 }
 
 export default function Input({
@@ -27,6 +28,7 @@ export default function Input({
   onChange,
   validate,
   isRequired = false,
+  isDisabled = false,
 }: InputProps) {
   return (
     <TextField
@@ -38,6 +40,7 @@ export default function Input({
       validate={validate}
       className="space-y-1"
       aria-label={label}
+      isDisabled={isDisabled}
     >
       <Label htmlFor={id} className="block text-sm font-medium">
         {label}

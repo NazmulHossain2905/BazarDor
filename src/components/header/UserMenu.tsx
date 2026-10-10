@@ -1,13 +1,32 @@
+"use client";
+
+import { IUser } from "@/interfaces/IUser";
+import { signOut } from "@/lib/auth-client";
+import { toast } from "@heroui/react";
 import Link from "next/link";
 import { FaRegUser } from "react-icons/fa";
 import { TbLogout2 } from "react-icons/tb";
 
-export default function UserMenu() {
+interface UserMenuProps {
+  user: IUser;
+}
+
+export default function UserMenu({ user }: UserMenuProps) {
+  const handleSignOut = async () => {
+    try {
+      const { data, error } = await signOut();
+      toast.success("সফলভাবে সাইন আউট হয়েছে।");
+      console.log("After sign out =>", data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="absolute p-2 rounded-2xl z-20 bg-white min-w-[256px] mt-2 right-0 border border-base-300 shadow">
       <div className="py-2 px-3 ">
-        <h4 className="font-semibold text-sm">Rezwan Ahmed</h4>
-        <p className="text-xs">rezwanahmed@gmail.com</p>
+        <h4 className="font-semibold text-sm">{user.name}</h4>
+        <p className="text-xs">{user.email}</p>
       </div>
 
       <div className="flex flex-col gap-1">
@@ -19,7 +38,10 @@ export default function UserMenu() {
           <span>আমার প্রোফাইল</span>
         </Link>
 
-        <button className="h-8 text-left px-3 py-1.5 rounded-lg hover:bg-base-200 transition-colors text-sm cursor-pointer text-error flex items-center gap-2">
+        <button
+          onClick={handleSignOut}
+          className="h-8 text-left px-3 py-1.5 rounded-lg hover:bg-base-200 transition-colors text-sm cursor-pointer text-error flex items-center gap-2"
+        >
           <TbLogout2 className="size-4" /> <span>সাইন আউট</span>
         </button>
       </div>
