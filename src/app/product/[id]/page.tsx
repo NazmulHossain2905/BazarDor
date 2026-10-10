@@ -5,16 +5,21 @@ import PriceSummary from "@/components/product-details/PriceSummary";
 import ProductOverview from "@/components/product-details/ProductOverview";
 import { getUnitInBangla } from "@/utils/getUnitInBangla";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 interface ProductDetailsPageProps {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ id: string }>;
 }
 
 export default async function ProductDetailsPage({
   params,
 }: ProductDetailsPageProps) {
-  const { slug } = await params;
-  const product = await getSingleProduct(slug);
+  const { id: productId } = await params;
+  const product = await getSingleProduct(productId);
+
+  if (!product) {
+    notFound();
+  }
 
   const isUp = product.change.dir === "up";
   const direction = product.change.dir;

@@ -4,10 +4,10 @@ import Button from "../common/Button";
 export default function Authentication() {
   return (
     <div className="flex gap-2">
-      <Link href="/sign-in">
+      <Link href="/signin">
         <Button variant="ghost">সাইন ইন</Button>
       </Link>
-      <Link href="/sign-up">
+      <Link href="/signup">
         <Button>সাইন আপ</Button>
       </Link>
     </div>

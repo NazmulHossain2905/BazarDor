@@ -37,6 +37,7 @@ export default function Input({
       isRequired={isRequired}
       validate={validate}
       className="space-y-1"
+      aria-label={label}
     >
       <Label htmlFor={id} className="block text-sm font-medium">
         {label}

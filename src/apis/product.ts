@@ -1,7 +1,7 @@
 import { ICategory } from "@/interfaces/ICategory";
 import { IProduct } from "@/interfaces/IProduct";
 
-const BASE_URL = "https://api.abcz.workers.dev";
+const BASE_URL = "https://openapi.programming-hero.com";
 
 export async function getCategories(): Promise<ICategory[]> {
   const response = await fetch(`${BASE_URL}/api/bazardor/categories`);
@@ -39,10 +39,16 @@ export async function getProductsByCategory(
   return response.json();
 }
 
-export async function getSingleProduct(productId: string): Promise<IProduct> {
+export async function getSingleProduct(
+  productId: string,
+): Promise<IProduct | null> {
   const response = await fetch(
     `${BASE_URL}/api/bazardor/products/${productId}`,
   );
+
+  if (response.status === 404) {
+    return null;
+  }
 
   if (!response.ok) {
     throw new Error(`Failed to fetch getSingleProduct: ${response.status}`);

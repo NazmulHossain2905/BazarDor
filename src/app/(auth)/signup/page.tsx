@@ -7,8 +7,9 @@ import { Form, Separator } from "@heroui/react";
 import Link from "next/link";
 import { useState } from "react";
 
-export default function SignInPage() {
+export default function SignUpPage() {
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -24,9 +25,9 @@ export default function SignInPage() {
   return (
     <section className="max-w-md space-y-6 px-4 py-10 mx-auto">
       <div className="space-y-1 text-center">
-        <h2 className="font-bold text-2xl">সাইন ইন</h2>
+        <h2 className="font-bold text-2xl">অ্যাকাউন্ট তৈরি করুন</h2>
         <p className="text-sm text-base-content/70">
-          বিস্তারিত দাম, বাজার তুলনা ও প্রোফাইল দেখতে অ্যাকাউন্টে ঢুকুন।
+          বিনা খরচে সাইন আপ করে সব বিস্তারিত দাম দেখুন।
         </p>
       </div>
 
@@ -34,6 +35,22 @@ export default function SignInPage() {
         className="rounded-2xl bg-base-100 border border-base-300 p-6 flex flex-col gap-4"
         onSubmit={onSubmit}
       >
+        <Input
+          id="name"
+          label="নাম"
+          placeholder="যেমন: রহিম উদ্দিন"
+          isRequired
+          validate={(value) => {
+            if (!value.trim()) {
+              return "নাম দেওয়া আবশ্যক।";
+            }
+            if (value.trim().length < 2) {
+              return "নাম কমপক্ষে ২ অক্ষরের হতে হবে।";
+            }
+            return undefined;
+          }}
+        />
+
         <Input
           id="email"
           label="ইমেইল"
@@ -70,7 +87,28 @@ export default function SignInPage() {
           }}
         />
 
-        <MyButton>সাইন ইন</MyButton>
+        <Input
+          id="confirmPassword"
+          label="পাসওয়ার্ড নিশ্চিত করুন"
+          placeholder="আবার লিখুন"
+          type="password"
+          value={confirmPassword}
+          onChange={setConfirmPassword}
+          isRequired
+          validate={(value) => {
+            if (!value) {
+              return "পাসওয়ার্ড নিশ্চিত করা আবশ্যক।";
+            }
+
+            if (value !== password) {
+              return "দুটি পাসওয়ার্ড মিলছে না।";
+            }
+
+            return undefined;
+          }}
+        />
+
+        <MyButton>অ্যাকাউন্ট তৈরি করুন</MyButton>
 
         <div className="flex gap-4 items-center">
           <Separator className="flex-1 h-0.5 bg-base-content/10" />
@@ -81,9 +119,9 @@ export default function SignInPage() {
         <SocialButtons />
 
         <p className="text-sm text-center">
-          অ্যাকাউন্ট নেই?{" "}
-          <Link href="/sign-in" className="text-primary hover:underline">
-            সাইন আপ করুন
+          অ্যাকাউন্ট আছে?{" "}
+          <Link href="/signin" className="text-primary hover:underline">
+            সাইন ইন করুন
           </Link>
         </p>
       </Form>
