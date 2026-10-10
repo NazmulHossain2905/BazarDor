@@ -12,7 +12,7 @@ export default function UserMenu() {
 
       <div className="flex flex-col gap-1">
         <Link
-          href={"account/profile"}
+          href={"/profile"}
           className="h-8 px-3 py-1.5 rounded-lg hover:bg-base-200 transition-colors text-sm flex items-center gap-2"
         >
           <FaRegUser className="size-4" />
