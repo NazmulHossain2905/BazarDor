@@ -40,8 +40,8 @@ export function SortDropDown({
       }}
       className="w-full"
     >
-      <Select.Trigger className="border border-base-300 bg-base-100">
-        <Select.Value className="mr-2" />
+      <Select.Trigger className="border border-base-300 bg-base-100 py-1 items-center md:py-2 rounded-xl">
+        <Select.Value className="mr-2 text-sm" />
         <Select.Indicator />
       </Select.Trigger>
 

@@ -22,7 +22,7 @@ export default function CategoryNavLinks({
           <Link
             key={category.id}
             href={href}
-            className={`h-8 gap-1.5 px-3 font-semibold text-xs py-0.5 rounded-lg flex items-center transition-colors 
+            className={`h-8 gap-1.5 px-3 font-semibold text-xs py-0.5 rounded-lg flex items-center transition-colors min-w-fit 
                 ${isActive ? "bg-primary-strong text-primary-content" : "hover:bg-base-300"}`}
           >
             <span>{category.icon}</span>

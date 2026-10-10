@@ -23,7 +23,7 @@ export default function Button({
 
   return (
     <button
-      className={`px-4 py-0.5 h-10 select-none cursor-pointer transition-colors rounded-lg flex justify-center items-center gap-1.5 font-semibold text-sm ${btn}`}
+      className={`px-4 h-10 select-none cursor-pointer transition-colors rounded-lg flex justify-center items-center gap-1.5 font-semibold text-xs md:text-sm ${btn}`}
       onClick={onClick}
     >
       {children}

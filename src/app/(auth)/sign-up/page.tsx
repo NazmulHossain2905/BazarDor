@@ -2,8 +2,8 @@
 
 import MyButton from "@/components/common/Button";
 import Input from "@/components/common/Input";
-import { Button, Form, Separator } from "@heroui/react";
-import { Icon } from "@iconify/react";
+import SocialButtons from "@/components/common/SocialButtons";
+import { Form, Separator } from "@heroui/react";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -116,22 +116,7 @@ export default function SignUpPage() {
           <Separator className="flex-1 h-0.5 bg-base-content/10" />
         </div>
 
-        <div className="flex w-full gap-2">
-          <Button
-            variant="outline"
-            className="text-sm font-semibold rounded-lg gap-1.5 px-3 flex-1"
-          >
-            <Icon icon="devicon:google" className="size-3.5" />
-            Google দিয়ে চালিয়ে যান
-          </Button>
-          <Button
-            variant="outline"
-            className="text-sm font-semibold rounded-lg gap-1.5 px-3 flex-1"
-          >
-            <Icon icon="mdi:github" className="size-3.5" />
-            GitHub দিয়ে চালিয়ে যান
-          </Button>
-        </div>
+        <SocialButtons />
 
         <p className="text-sm text-center">
           অ্যাকাউন্ট আছে?{" "}

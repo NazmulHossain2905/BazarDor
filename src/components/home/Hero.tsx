@@ -5,7 +5,7 @@ import CurrentBanglaDate from "../common/CurrentBanglaDate";
 
 export default function Hero() {
   return (
-    <div className="rounded-3xl bg-base-100 border border-base-300 p-4 px-6 flex justify-between items-center">
+    <div className="flex flex-col items-center justify-between gap-6 rounded-3xl border border-base-300 bg-base-100 p-6 sm:flex-row">
       <div className="max-w-xl">
         <CurrentBanglaDate className="bg-primary/10 px-3 py-1 rounded-[14px] font-semibold text-sm text-primary w-fit" />
 
