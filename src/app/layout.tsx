@@ -2,6 +2,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/header";
 import PriceTickerMarquee from "@/components/price-ticker-marquee";
 import PriceTickerSkeleton from "@/components/price-ticker-marquee/PriceTickerSkeleton";
+import { Toast } from "@heroui/react";
 import type { Metadata } from "next";
 import { Hind_Siliguri } from "next/font/google";
 import { Suspense } from "react";
@@ -33,6 +34,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <main className="flex-1">{children}</main>
 
         <Footer />
+
+        <Toast.Provider placement="top" />
       </body>
     </html>
   );

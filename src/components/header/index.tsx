@@ -6,7 +6,7 @@ import NavCategory from "./NavCategory";
 import User from "./User";
 
 export default function Header() {
-  const user = {};
+  const user = null;
 
   return (
     <header className="bg-base-100 border-b sticky top-0 z-10 border-b-base-300">
