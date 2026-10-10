@@ -1,5 +1,5 @@
 import { IProduct } from "@/interfaces/IProduct";
-import ProductCard from "../common/ProductCard";
+import ProductsGrid from "../common/ProductsGrid";
 
 export default function PriceIncreased({ products }: { products: IProduct[] }) {
   return (
@@ -8,11 +8,7 @@ export default function PriceIncreased({ products }: { products: IProduct[] }) {
         <span className="text-error">▲</span> আজ দাম বেড়েছে
       </h4>
 
-      <div className="grid grid-cols-3 gap-4">
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </div>
+      <ProductsGrid products={products} />
     </div>
   );
 }

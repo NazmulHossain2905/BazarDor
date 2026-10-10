@@ -1,5 +1,5 @@
 import { IProduct } from "@/interfaces/IProduct";
-import ProductCard from "../common/ProductCard";
+import ProductsGrid from "../common/ProductsGrid";
 
 export default function AllProducts({ products }: { products: IProduct[] }) {
   return (
@@ -9,11 +9,7 @@ export default function AllProducts({ products }: { products: IProduct[] }) {
         মোট {products.length.toLocaleString("bn-BD")} টি পণ্য দেখানো হচ্ছে
       </p>
 
-      <div className="grid grid-cols-3 gap-4">
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </div>
+      <ProductsGrid products={products} />
     </div>
   );
 }
