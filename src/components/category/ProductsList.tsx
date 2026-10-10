@@ -12,6 +12,25 @@ interface ProductsListProps {
 export default function ProductsList({ products }: ProductsListProps) {
   const [sortBy, setSortBy] = useState("default");
 
+  let sortedProducts = [...products];
+
+  switch (sortBy) {
+    case "price-asc": {
+      sortedProducts.sort((a, b) => a.today - b.today);
+      break;
+    }
+
+    case "price-desc": {
+      sortedProducts.sort((a, b) => b.today - a.today);
+      break;
+    }
+
+    case "default":
+    default: {
+      break;
+    }
+  }
+
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
@@ -23,7 +42,7 @@ export default function ProductsList({ products }: ProductsListProps) {
         </div>
       </div>
 
-      <ProductsGrid products={products} />
+      <ProductsGrid products={sortedProducts} />
     </div>
   );
 }
