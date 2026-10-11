@@ -2,24 +2,53 @@
 
 import MyButton from "@/components/common/Button";
 import Input from "@/components/common/Input";
-import { Form } from "@heroui/react";
-import Image from "next/image";
-import { SyntheticEvent, useState } from "react";
-import { TbLogout2 } from "react-icons/tb";
+import ProfileCard from "@/components/profile/ProfileCard";
+import ProfileLoading from "@/components/profile/ProfileLoading";
+import { IUser } from "@/interfaces/IUser";
+import { updateUser, useSession } from "@/lib/auth-client";
+import { Form, toast } from "@heroui/react";
+import { SyntheticEvent, useEffect, useState } from "react";
 
 export default function ProfilePage() {
-  const [name, setName] = useState("Rezwan Ahmed");
+  const { data, isPending } = useSession();
+  const user = data?.user;
 
-  const onSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
+  const [name, setName] = useState(user?.name ?? "...");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      setName(user.name);
+    }
+  }, [user]);
+
+  const handleUpdateUser = async (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const data: Record<string, string> = {};
-    // Convert FormData to plain object
+
     formData.forEach((value, key) => {
       data[key] = value.toString();
     });
-    alert(`Form submitted with: ${JSON.stringify(data, null, 2)}`);
+
+    try {
+      setIsSubmitting(true);
+      const { data: resData, error } = await updateUser({
+        name: data.name,
+      });
+
+      if (resData?.status) {
+        toast.success("নাম সফলভাবে আপডেট হয়েছে।");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.danger("কিছু একটা সমস্যা হয়েছে। আবার চেষ্টা করুন।");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
+  const isLoading = isPending || isSubmitting;
 
   return (
     <section className="px-4 py-6 flex flex-col gap-6 max-w-3xl mx-auto mt-8 md:mt-25">
@@ -30,34 +59,14 @@ export default function ProfilePage() {
         </p>
       </div>
 
-      <div className="p-6 flex gap-4 rounded-2xl bg-base-100 border border-base-300 md:items-center flex-col md:flex-row">
-        <div className="flex gap-4 flex-1 items-center">
-          <Image
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIAoztWOBzzT4Ot88AyzvYq0Ng6A_NNSpgh32mfE-zEiMEUR5HTUPVfnRM"
-            width={70}
-            height={70}
-            alt="Logo Image"
-            className="w-16 h-16 rounded-xl"
-            priority
-          />
-
-          <div className="flex-1">
-            <h4 className="font-semibold text-xl">Rezwan Ahmed</h4>
-            <p className="text-base-content/70">rezwanahmed@gmail.com</p>
-          </div>
-        </div>
-
-        <button className="h-10 w-full md:w-auto justify-center px-4 py-1.5 rounded-lg border border-error text-sm font-semibold cursor-pointer text-error flex items-center gap-2 hover:bg-error/10 transition-colors">
-          <TbLogout2 className="size-4" /> <span>সাইন আউট</span>
-        </button>
-      </div>
+      {isPending ? <ProfileLoading /> : <ProfileCard user={user as IUser} />}
 
       <div className="p-6 flex flex-col rounded-2xl bg-base-100 border border-base-300">
         <h3 className="text-lg font-semibold">তথ্য</h3>
 
         <Form
           className="rounded-2xl bg-base-200 border border-base-300 p-6 flex flex-col gap-4 mt-3"
-          onSubmit={onSubmit}
+          onSubmit={handleUpdateUser}
         >
           <Input
             id="name"
@@ -66,6 +75,7 @@ export default function ProfilePage() {
             value={name}
             onChange={setName}
             isRequired
+            isDisabled={isLoading}
             validate={(value) => {
               if (!value.trim()) {
                 return "নাম দেওয়া আবশ্যক।";
@@ -77,7 +87,9 @@ export default function ProfilePage() {
             }}
           />
 
-          <MyButton>আপডেট</MyButton>
+          <MyButton isDisabled={isLoading}>
+            {isSubmitting ? "অনুগ্রহ করে অপেক্ষা করুন..." : "আপডেট করুন"}
+          </MyButton>
         </Form>
       </div>
     </section>

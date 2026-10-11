@@ -4,6 +4,7 @@ import { IUser } from "@/interfaces/IUser";
 import { signOut } from "@/lib/auth-client";
 import { toast } from "@heroui/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { FaRegUser } from "react-icons/fa";
 import { TbLogout2 } from "react-icons/tb";
 
@@ -12,11 +13,21 @@ interface UserMenuProps {
 }
 
 export default function UserMenu({ user }: UserMenuProps) {
+  const router = useRouter();
+
   const handleSignOut = async () => {
     try {
-      const { data, error } = await signOut();
-      toast.success("সফলভাবে সাইন আউট হয়েছে।");
-      console.log("After sign out =>", data);
+      const { data, error } = await signOut({
+        fetchOptions: {
+          onSuccess: () => {
+            router.push("/");
+          },
+        },
+      });
+
+      if (data?.success) {
+        toast.success("সফলভাবে সাইন আউট হয়েছে।");
+      }
     } catch (error) {
       console.error(error);
     }

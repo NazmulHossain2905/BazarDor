@@ -37,8 +37,8 @@ export default function SignUpPage() {
         callbackURL: "/",
       });
 
-      if (error) {
-        toast.danger(error.message);
+      if (error?.code === "VALIDATION_ERROR") {
+        toast.danger("সঠিক ইমেইল ঠিকানা দিন।");
         return;
       }
 
@@ -53,7 +53,7 @@ export default function SignUpPage() {
       }
     } catch (error) {
       console.error(error);
-      toast.danger("Something went wrong. Please try again.");
+      toast.danger("কিছু একটা সমস্যা হয়েছে। আবার চেষ্টা করুন।");
     } finally {
       setIsSubmitting(false);
     }
@@ -96,13 +96,23 @@ export default function SignUpPage() {
           placeholder="you@example.com"
           isRequired
           isDisabled={isLoading}
-          validate={(value) =>
-            !value.trim()
-              ? "ইমেইল আবশ্যক।"
-              : !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
-                ? "সঠিক ইমেইল দিন।"
-                : undefined
-          }
+          validate={(value) => {
+            const email = value.trim();
+
+            if (!email) {
+              return "ইমেইল আবশ্যক।";
+            }
+
+            if (email.length > 254) {
+              return "ইমেইল ২৫৪ অক্ষরের বেশি হতে পারবে না।";
+            }
+
+            // if (!/^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(email)) {
+            //   return "সঠিক ইমেইল দিন।";
+            // }
+
+            return undefined;
+          }}
         />
 
         <Input
