@@ -31,8 +31,6 @@ export default function SignInPage() {
         callbackURL: "/",
       });
 
-      console.log(error);
-
       if (error?.status === 401) {
         toast.danger("ইমেইল অথবা পাসওয়ার্ড সঠিক নয়। আবার চেষ্টা করুন।");
         return;

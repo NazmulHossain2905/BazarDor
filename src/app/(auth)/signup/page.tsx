@@ -34,10 +34,8 @@ export default function SignUpPage() {
         name: data.name,
         email: data.email,
         password: data.password,
-        callbackURL: "/",
+        callbackURL: "/signin",
       });
-
-      console.log(error);
 
       if (error) {
         if (error?.code === "VALIDATION_ERROR") {
@@ -57,7 +55,8 @@ export default function SignUpPage() {
         setPassword("");
         setConfirmPassword("");
 
-        router.replace("/");
+        router.replace("/signin");
+        router.refresh();
       }
     } catch (error) {
       console.error(error);
