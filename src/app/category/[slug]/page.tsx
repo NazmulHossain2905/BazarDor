@@ -1,5 +1,6 @@
 import { getProductsByCategory } from "@/apis/product";
 import ProductsList from "@/components/category/ProductsList";
+import bengaliDigit from "@/utils/bengaliDigit";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -32,8 +33,7 @@ export default async function CategoryDetails({
             {products?.[0]?.categoryNameBn}
           </h3>
           <p className="text-sm text-base-content/70">
-            {products.length.toLocaleString("bn-BD")}টি পণ্যের আজকের দাম ও
-            পরিবর্তন
+            {bengaliDigit(products.length)}টি পণ্যের আজকের দাম ও পরিবর্তন
           </p>
         </div>
       </div>

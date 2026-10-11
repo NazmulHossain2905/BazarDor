@@ -1,4 +1,5 @@
 import { IMarket } from "@/interfaces/IProduct";
+import bengaliDigit from "@/utils/bengaliDigit";
 
 interface MarketTableProps {
   markets: IMarket[];
@@ -49,10 +50,10 @@ export default function MarketTable({ markets }: MarketTableProps) {
                 </td>
                 <td className="px-4 py-3 text-sm">{market.division}</td>
                 <td className="px-4 py-3 text-right text-sm">
-                  {market.min.toLocaleString("bn-BD")} টাকা
+                  {bengaliDigit(market.min)} টাকা
                 </td>
                 <td className="px-4 py-3 text-right text-sm">
-                  {market.max.toLocaleString("bn-BD")} টাকা
+                  {bengaliDigit(market.max)} টাকা
                 </td>
                 <td className="px-4 py-3 text-right text-sm font-semibold">
                   {formatPrice((market.max + market.min) / 2)} টাকা

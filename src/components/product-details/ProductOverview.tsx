@@ -1,4 +1,5 @@
 import { IProduct } from "@/interfaces/IProduct";
+import bengaliDigit from "@/utils/bengaliDigit";
 import { getUnitInBangla } from "@/utils/getUnitInBangla";
 
 interface ProductOverviewProps {
@@ -42,7 +43,7 @@ export default function ProductOverview({ product }: ProductOverviewProps) {
           <p className="mt-2 text-sm text-base-content">
             গতকালের তুলনায় আজ দাম
             <span className="font-semibold">{changeLabel}</span>
-            {!noChange && <> • {changeAmount.toLocaleString("bn-BD")} টাকা</>}
+            {!noChange && <> • {bengaliDigit(changeAmount)} টাকা</>}
           </p>
         </div>
       </div>
@@ -50,7 +51,7 @@ export default function ProductOverview({ product }: ProductOverviewProps) {
       <div className="flex shrink-0 flex-col items-center justify-center rounded-2xl bg-base-200 px-5 py-4">
         <p className="text-sm text-base-content/70">আজকের দাম</p>
 
-        <p className="text-3xl font-bold">{today.toLocaleString("bn-BD")}</p>
+        <p className="text-3xl font-bold">{bengaliDigit(today)}</p>
 
         <p className="text-sm text-base-content/70">
           টাকা / {getUnitInBangla(unit)}
@@ -60,7 +61,7 @@ export default function ProductOverview({ product }: ProductOverviewProps) {
           className={`rounded-xl bg-base-100 px-2 py-1 text-sm font-semibold ${textStyle}`}
         >
           {directionIcon}
-          {Math.abs(change.pct).toLocaleString("bn-BD", {
+          {bengaliDigit(Math.abs(change.pct), {
             minimumFractionDigits: 1,
             maximumFractionDigits: 1,
           })}

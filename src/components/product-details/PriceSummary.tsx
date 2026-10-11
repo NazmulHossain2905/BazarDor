@@ -1,3 +1,5 @@
+import bengaliDigit from "@/utils/bengaliDigit";
+
 interface PriceSummaryProps {
   minPrice: number;
   maxPrice: number;
@@ -50,7 +52,7 @@ export default function PriceSummary({
             <p className="text-xs">{item.label}</p>
 
             <h4 className={`text-2xl font-bold ${item.color}`}>
-              {Math.round(prices[item.key]).toLocaleString("bn-BD")}
+              {bengaliDigit(Math.round(prices[item.key]))}
               <span className="text-sm font-medium">টাকা</span>
             </h4>
 

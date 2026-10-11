@@ -1,4 +1,5 @@
 import { IProduct } from "@/interfaces/IProduct";
+import bengaliDigit from "@/utils/bengaliDigit";
 import { getUnitInBangla } from "@/utils/getUnitInBangla";
 import Link from "next/link";
 
@@ -45,7 +46,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       <div className="flex justify-between items-center">
         <p className="font-medium text-sm">
           <span className="font-bold text-xl">
-            {product.today.toLocaleString("bn-BD")}
+            {bengaliDigit(product.today)}
           </span>{" "}
           টাকা
         </p>
@@ -54,7 +55,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           className={`px-2 py-1 bg-base-200 rounded-xl text-xs font-semibold ${textStyle}`}
         >
           {directionIcon}{" "}
-          {Math.abs(product.change.pct).toLocaleString("bn-BD", {
+          {bengaliDigit(Math.abs(product.change.pct), {
             minimumFractionDigits: 1,
             maximumFractionDigits: 1,
           })}

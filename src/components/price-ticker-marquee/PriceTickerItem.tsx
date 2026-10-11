@@ -1,4 +1,5 @@
 import { IProduct } from "@/interfaces/IProduct";
+import bengaliDigit from "@/utils/bengaliDigit";
 import { getUnitInBangla } from "@/utils/getUnitInBangla";
 import Link from "next/link";
 
@@ -17,7 +18,7 @@ export default function PriceTickerItem({ product }: PriceTickerItemProps) {
       <span>{product.image}</span>
       <span className="font-medium">{product.nameBn}</span>
       <span>
-        {product.today.toLocaleString("bn-BD")} টাকা/
+        {bengaliDigit(product.today)} টাকা/
         {getUnitInBangla(product.unit)}
       </span>
 
@@ -26,8 +27,7 @@ export default function PriceTickerItem({ product }: PriceTickerItemProps) {
           isUp ? "font-semibold text-error" : "font-semibold text-success"
         }
       >
-        {isUp ? "▲" : "▼"}{" "}
-        {Math.abs(product.change.pct).toLocaleString("bn-BD")}%
+        {isUp ? "▲" : "▼"} {bengaliDigit(Math.abs(product.change.pct))}%
       </span>
     </Link>
   );
