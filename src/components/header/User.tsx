@@ -27,7 +27,7 @@ export default function User({ user }: UserProps) {
             width={36}
             height={36}
             alt="Logo Image"
-            className="w-9 h-9 rounded-xl"
+            className="w-9 h-9 rounded-xl bg-primary/40"
             priority
           />
         ) : (
