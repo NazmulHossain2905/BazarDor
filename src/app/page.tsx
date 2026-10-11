@@ -3,6 +3,11 @@ import AllProducts from "@/components/home/AllProducts";
 import Hero from "@/components/home/Hero";
 import PriceDecreased from "@/components/home/PriceDecreased";
 import PriceIncreased from "@/components/home/PriceIncreased";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "বাজার দর — আজকের দাঁড়ির দাম",
+};
 
 export default async function HomePage() {
   const allProducts = await getAllProducts();

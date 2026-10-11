@@ -1,17 +1,23 @@
 import { getProductsByCategory } from "@/apis/product";
 import ProductsList from "@/components/category/ProductsList";
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 interface CategoryDetailsProps {
-  params: Promise<{ id: string }>;
+  params: Promise<{ slug: string }>;
 }
+
+export const metadata: Metadata = {
+  title: "ক্যাটাগরি | বাজার দর",
+  description: "বাংলাদেশের সর্বশেষ বাজার দর দেখুন।",
+};
 
 export default async function CategoryDetails({
   params,
 }: CategoryDetailsProps) {
-  const { id: categoryId } = await params;
+  const { slug } = await params;
 
-  const products = await getProductsByCategory(categoryId);
+  const products = await getProductsByCategory(slug);
 
   if (products.length === 0) {
     notFound();
