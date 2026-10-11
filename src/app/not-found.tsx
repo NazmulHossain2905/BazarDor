@@ -15,9 +15,9 @@ export default function NotFoundPage() {
         <Button>
           <Link href="/">হোম পেজে ফিরে যান</Link>
         </Button>
-        <Button variant="outline">
+        {/* <Button variant="outline">
           <Link href="/compare">বাজার তুলনা দেখুন</Link>
-        </Button>
+        </Button> */}
       </div>
     </div>
   );

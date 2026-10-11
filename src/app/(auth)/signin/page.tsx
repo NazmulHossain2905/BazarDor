@@ -70,13 +70,24 @@ export default function SignInPage() {
           label="ইমেইল"
           placeholder="you@example.com"
           isRequired
-          validate={(value) =>
-            !value.trim()
-              ? "ইমেইল আবশ্যক।"
-              : !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
-                ? "সঠিক ইমেইল দিন।"
-                : undefined
-          }
+          isDisabled={isLoading}
+          validate={(value) => {
+            const email = value.trim();
+
+            if (!email) {
+              return "ইমেইল আবশ্যক।";
+            }
+
+            if (email.length > 254) {
+              return "ইমেইল ২৫৪ অক্ষরের বেশি হতে পারবে না।";
+            }
+
+            if (!/^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(email)) {
+              return "সঠিক ইমেইল দিন।";
+            }
+
+            return undefined;
+          }}
         />
 
         <Input
@@ -85,6 +96,7 @@ export default function SignInPage() {
           placeholder="পাসওয়ার্ড"
           type="password"
           isRequired
+          isDisabled={isLoading}
           validate={(value) => {
             if (value.length < 8) {
               return "পাসওয়ার্ড কমপক্ষে ৮ অক্ষরের হতে হবে।";

@@ -1,6 +1,7 @@
 "use client";
 
 import { IProduct } from "@/interfaces/IProduct";
+import bengaliDigit from "@/utils/bengaliDigit";
 import { useState } from "react";
 import ProductsGrid from "../common/ProductsGrid";
 import { SortDropDown } from "./SortDropDown";
@@ -35,8 +36,7 @@ export default function ProductsList({ products }: ProductsListProps) {
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <p className="text-sm text-base-content/70">
-          মোট {sortedProducts.length.toLocaleString("bn-BD")}টি পণ্য দেখানো
-          হচ্ছে
+          মোট {bengaliDigit(sortedProducts.length)}টি পণ্য দেখানো হচ্ছে
         </p>
         <div className="text-sm text-base-content/70 flex items-center gap-2">
           সাজান <SortDropDown value={sortBy} onChange={setSortBy} />

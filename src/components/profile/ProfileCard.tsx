@@ -17,7 +17,8 @@ export default function ProfileCard({ user }: ProfileCardProps) {
       const { data } = await signOut({
         fetchOptions: {
           onSuccess: () => {
-            router.push("/");
+            router.replace("/");
+            router.refresh();
           },
         },
       });

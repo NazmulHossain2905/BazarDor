@@ -20,7 +20,8 @@ export default function UserMenu({ user }: UserMenuProps) {
       const { data, error } = await signOut({
         fetchOptions: {
           onSuccess: () => {
-            router.push("/");
+            router.replace("/");
+            router.refresh();
           },
         },
       });

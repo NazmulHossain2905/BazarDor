@@ -1,13 +1,25 @@
 import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function proxy(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+
   const session = await auth.api.getSession({
-    headers: await headers(),
+    headers: request.headers,
   });
 
-  if (!session) {
+  const isLoggedIn = !!session;
+
+  const isAuthPage = pathname === "/signin" || pathname === "/signup";
+
+  if (isLoggedIn && isAuthPage) {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
+
+  if (
+    !isLoggedIn &&
+    (pathname.startsWith("/profile") || pathname.startsWith("/product"))
+  ) {
     return NextResponse.redirect(new URL("/signin", request.url));
   }
 
@@ -15,5 +27,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/profile/:path*", "/product/:path*"],
+  matcher: ["/signin", "/signup", "/profile/:path*", "/product/:path*"],
 };

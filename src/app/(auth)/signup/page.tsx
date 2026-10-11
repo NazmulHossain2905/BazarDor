@@ -37,8 +37,16 @@ export default function SignUpPage() {
         callbackURL: "/",
       });
 
-      if (error?.code === "VALIDATION_ERROR") {
-        toast.danger("সঠিক ইমেইল ঠিকানা দিন।");
+      console.log(error);
+
+      if (error) {
+        if (error?.code === "VALIDATION_ERROR") {
+          toast.danger("সঠিক ইমেইল ঠিকানা দিন।");
+        } else if (error.code === "USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL") {
+          toast.danger("এই ইমেইলে ইতিমধ্যে অ্যাকাউন্ট আছে। অন্য ইমেইল দিন।");
+        } else {
+          toast.danger(error.message);
+        }
         return;
       }
 
@@ -49,7 +57,7 @@ export default function SignUpPage() {
         setPassword("");
         setConfirmPassword("");
 
-        router.push("/");
+        router.replace("/");
       }
     } catch (error) {
       console.error(error);
@@ -107,9 +115,9 @@ export default function SignUpPage() {
               return "ইমেইল ২৫৪ অক্ষরের বেশি হতে পারবে না।";
             }
 
-            // if (!/^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(email)) {
-            //   return "সঠিক ইমেইল দিন।";
-            // }
+            if (!/^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(email)) {
+              return "সঠিক ইমেইল দিন।";
+            }
 
             return undefined;
           }}

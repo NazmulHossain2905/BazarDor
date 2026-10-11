@@ -41,7 +41,7 @@ export default function ProductOverview({ product }: ProductOverviewProps) {
           </p>
 
           <p className="mt-2 text-sm text-base-content">
-            গতকালের তুলনায় আজ দাম
+            গতকালের তুলনায় আজ দাম{" "}
             <span className="font-semibold">{changeLabel}</span>
             {!noChange && <> • {bengaliDigit(changeAmount)} টাকা</>}
           </p>
