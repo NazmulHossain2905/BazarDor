@@ -151,7 +151,9 @@ export default function SignUpPage() {
         />
 
         <MyButton isDisabled={isLoading}>
-          {isSubmitting ? "অ্যাকাউন্ট তৈরি হচ্ছে..." : "অ্যাকাউন্ট তৈরি করুন"}
+          {isSubmitting
+            ? "অনুগ্রহ করে অপেক্ষা করুন..."
+            : "অ্যাকাউন্ট তৈরি করুন"}
         </MyButton>
 
         <div className="flex gap-4 items-center">

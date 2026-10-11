@@ -3,23 +3,52 @@
 import MyButton from "@/components/common/Button";
 import Input from "@/components/common/Input";
 import SocialButtons from "@/components/common/SocialButtons";
-import { Form, Separator } from "@heroui/react";
+import { signIn } from "@/lib/auth-client";
+import { Form, Separator, toast } from "@heroui/react";
 import Link from "next/link";
-import { useState } from "react";
+import { SyntheticEvent, useState } from "react";
 
 export default function SignInPage() {
-  const [password, setPassword] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = async (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
     const data: Record<string, string> = {};
-    // Convert FormData to plain object
+
     formData.forEach((value, key) => {
       data[key] = value.toString();
     });
-    alert(`Form submitted with: ${JSON.stringify(data, null, 2)}`);
+
+    try {
+      setIsSubmitting(true);
+
+      const { data: resData, error } = await signIn.email({
+        email: data.email,
+        password: data.password,
+        callbackURL: "/",
+      });
+
+      if (error) {
+        toast.danger(error.message);
+        return;
+      }
+
+      if (resData) {
+        toast.success("সফলভাবে সাইন ইন হয়েছে।");
+
+        form.reset();
+      }
+    } catch (error) {
+      console.error(error);
+      toast.danger("কিছু একটা সমস্যা হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+  const isLoading = isSubmitting;
 
   return (
     <section className="max-w-md space-y-6 px-4 py-10 mx-auto">
@@ -32,7 +61,7 @@ export default function SignInPage() {
 
       <Form
         className="rounded-2xl bg-base-100 border border-base-300 p-6 flex flex-col gap-4"
-        onSubmit={onSubmit}
+        onSubmit={handleFormSubmit}
       >
         <Input
           id="email"
@@ -53,8 +82,6 @@ export default function SignInPage() {
           label="পাসওয়ার্ড"
           placeholder="পাসওয়ার্ড"
           type="password"
-          value={password}
-          onChange={setPassword}
           isRequired
           validate={(value) => {
             if (value.length < 8) {
@@ -70,7 +97,9 @@ export default function SignInPage() {
           }}
         />
 
-        <MyButton>সাইন ইন</MyButton>
+        <MyButton isDisabled={isLoading}>
+          {isSubmitting ? "অনুগ্রহ করে অপেক্ষা করুন..." : "সাইন ইন"}
+        </MyButton>
 
         <div className="flex gap-4 items-center">
           <Separator className="flex-1 h-0.5 bg-base-content/10" />
