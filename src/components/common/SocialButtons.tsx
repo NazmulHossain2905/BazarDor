@@ -24,9 +24,9 @@ export default function SocialButtons() {
         return;
       }
 
-      if (data) {
-        toast.success("অ্যাকাউন্টে প্রবেশ সফল হয়েছে।");
-      }
+      // if (data) {
+      //   toast.success("অ্যাকাউন্টে প্রবেশ সফল হয়েছে।");
+      // }
     } catch (error) {
       console.error(error);
       toast.danger(
@@ -37,12 +37,35 @@ export default function SocialButtons() {
     }
   };
 
+  const handleGitHub = async () => {
+    try {
+      setSocialLoading("github");
+
+      const { error } = await signIn.social({
+        provider: "github",
+        callbackURL: "/",
+      });
+
+      if (error) {
+        toast.danger(error.message);
+        return;
+      }
+    } catch (error) {
+      console.error(error);
+      toast.danger(
+        "GitHub দিয়ে সাইন আপ করা যায়নি। অনুগ্রহ করে আবার চেষ্টা করুন।",
+      );
+    } finally {
+      setSocialLoading(null);
+    }
+  };
+
   return (
     <div className="flex w-full gap-2 flex-col md:flex-row">
       <Button
-        onClick={handleGoogle}
         variant="outline"
         className="w-full text-sm font-semibold rounded-lg gap-1.5 px-3 md:flex-1"
+        onClick={handleGoogle}
         isDisabled={!!socialLoading}
       >
         <Icon icon="devicon:google" className="size-3.5" />
@@ -55,6 +78,7 @@ export default function SocialButtons() {
       <Button
         variant="outline"
         className="w-full text-sm font-semibold rounded-lg gap-1.5 px-3 md:flex-1"
+        onClick={handleGitHub}
         isDisabled={!!socialLoading}
       >
         <Icon icon="mdi:github" className="size-3.5" />
